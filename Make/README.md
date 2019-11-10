@@ -74,3 +74,8 @@ clean:
       -rm *.o
 ```
 Using automatic variables ↑
+
+### References
+
+[A Simple Makefile Tutorial](http://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/)<br>
+[Makefileの解説](http://omilab.naist.jp/~mukaigawa/misc/Makefile.html)<br>
