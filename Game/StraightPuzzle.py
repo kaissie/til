@@ -1,9 +1,9 @@
 import tkinter as tk
 import random
-from enum import IntFlag, auto
+import copy
 
-DEBUG_MODE = False
-
+DEBUG_MODE = True
+TABLE_LOG = []
 def launch(table):
     size = len(table)
     root = tk.Tk()
@@ -124,7 +124,7 @@ def get_block_pos(src,dest):
     else:
         print("Error: src{} and dest{} is not linked".format(src,dest))
 
-def create_table(size = 5, point_num = 4):
+def route_generate(size, point_num):
     table = [[0 for i in range(size)] for j in range(size)]
 
     start_point = (random.randint(0, size - 1), random.randint(0, size - 1))
@@ -137,15 +137,7 @@ def create_table(size = 5, point_num = 4):
     rand_count = 0
     while i < point_num + 1:
         if rand_count > point_num * 2:
-            table = [[0 for i in range(size)] for j in range(size)]
-            start_point = (random.randint(0, size - 1), random.randint(0, size - 1))
-            table[start_point[0]][start_point[1]] = "S"
-
-            prev_point = list(start_point)
-            is_vertical = bool(random.randint(0, 1))
-
-            i = 0
-            rand_count = 0
+            return False,table
 
         is_goal = i == point_num
         # get random number
@@ -173,26 +165,35 @@ def create_table(size = 5, point_num = 4):
                 continue
             table[block_pos[0]][block_pos[1]] = '#'
 
-        if DEBUG_MODE:
-            print("pre>{} cur>{} | block{}".format(prev_point, cur_point,block_pos))
-        if DEBUG_MODE:
-            print_table(table)
-
         prevent_line(table, prev_point)
         toward_next(table, prev_point, cur_point)
         prev_point = cur_point
         is_vertical = not is_vertical
         i += 1
-        if DEBUG_MODE:
-            print_table(table)
+        TABLE_LOG.append(copy.deepcopy(table))
+
 
     table[prev_point[0]][prev_point[1]] = 'G'
-    return  table
+    return  True, table
+
+def create_table(size=5, point_num=4):
+    miss_limit = 100
+    for _ in range(miss_limit):
+        success, result = route_generate(size, point_num)
+        if success:
+            return result
+    return  []
 
 def main():
     print("Non stop Maze")
-    table = create_table()
+    table = create_table(20,20)
 
+    if DEBUG_MODE:
+        print("///////// LOG /////////")
+        for t in TABLE_LOG:
+            print_table(t)
+
+    print("///////// RESULT /////////")
     print_table(table)
     launch(table)
 
