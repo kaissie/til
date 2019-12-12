@@ -59,3 +59,5 @@
   - 重い
 - <parenthoge>.transform.Find("childhoge")
   - 自身の子オブジェクト（非アクティブオブジェクト含む）を検索
+- gameObject.GetComponent<T> ()
+  - オブジェクトの持っているコンポーネント（スクリプト）にアクセスできる。（Tはコンポーネント名）
