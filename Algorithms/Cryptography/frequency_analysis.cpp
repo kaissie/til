@@ -14,15 +14,16 @@ bool compare_by_second(std::pair<char, float> a, std::pair<char, float> b) {
 }
 
 int main(int argc, char const *argv[]) {
-  std::ifstream ifs("./resources/stage1");
+  std::ifstream ifs("./resources/alice_in_wonderland.txt");
   std::string str((std::istreambuf_iterator<char>(ifs)), std::istreambuf_iterator<char>());
+  transform(str.begin(), str.end(), str.begin(), ::tolower);
   if (ifs.fail())
   {
       std::cerr << "Failed" << std::endl;
       return -1;
   }else{
     std::cout << "<Cryptogram>" << '\n';
-    std::cout << str << '\n';
+    //std::cout << str << '\n';
   }
 
   std::cout << "Frequency analysis" << '\n';
