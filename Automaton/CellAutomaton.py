@@ -63,7 +63,6 @@ def next(x,y):
         table[y][x].next_state = 1
     elif count >= 4:
         table[y][x].next_state = 0
-        print("<4>{}".format(count))
     elif count <= 1:
         table[y][x].next_state = 0
 
