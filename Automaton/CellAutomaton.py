@@ -2,21 +2,22 @@ import tkinter as tk
 import random
 WIDTH = 640
 HEIGHT = WIDTH
-# Cell table size
-SIZE = int(WIDTH/10)
+
+CELL_SIZE  = 10
+TABLE_SIZE = int(WIDTH/CELL_SIZE)
+
 root = tk.Tk()
-root.title(u"Cell Automaton")
+root.title(u"Life game")
 root.geometry("{}x{}".format(WIDTH,HEIGHT))
-canvas = tk.Canvas(root, width = SIZE*10, height = SIZE*10, bg="#2e4057")
+canvas = tk.Canvas(root, width = TABLE_SIZE*CELL_SIZE, height = TABLE_SIZE*CELL_SIZE, bg="#2e4057")
 canvas.pack()
 
-update_state = 0
+update_state = True
 
 class Cell():
-    def __init__(self, can, start_x, start_y, size = 10):
+    def __init__(self, can, start_x, start_y, size = CELL_SIZE):
         self.can=can
         self.state = random.randint(0,1)
-        # self.state = 0
         self.next_state = 0
         self.id = self.can.create_rectangle((start_x, start_y,
                   start_x+size, start_y+size), fill="#2e4057")
@@ -27,10 +28,13 @@ class Cell():
     def set_color(self, event=None):
         self.color_change = not self.color_change
         color="#2e4057"
+        state = 0
         if not self.color_change:
             color="#52b788"
-            self.state = 1
+            state = 1
         self.can.itemconfigure(self.id, fill=color)
+        self.state = state
+        self.next_state = state
 
     def next(self):
         self.state = self.next_state
@@ -46,10 +50,10 @@ def next(x,y):
         sx = 0
     if sy < 0:
         sy = 0
-    if ex > SIZE - 1:
-        ex = SIZE - 1
-    if ey > SIZE - 1:
-        ey = SIZE - 1
+    if ex > TABLE_SIZE - 1:
+        ex = TABLE_SIZE - 1
+    if ey > TABLE_SIZE - 1:
+        ey = TABLE_SIZE - 1
 
     count = 0
     for i in range(sy,ey + 1):
@@ -66,25 +70,39 @@ def next(x,y):
     elif count <= 1:
         table[y][x].next_state = 0
 
-
-
-table = [[0] * SIZE for i in range(SIZE)]
-for i in range(SIZE):
-    for j in range(SIZE):
-        table[i][j] = Cell(canvas,j*10, i*10)
+table = [[0] * TABLE_SIZE for i in range(TABLE_SIZE)]
+for i in range(TABLE_SIZE):
+    for j in range(TABLE_SIZE):
+        table[i][j] = Cell(canvas,j*CELL_SIZE, i*CELL_SIZE)
 
 def update():
-    for i in range(SIZE):
-        for j in range(SIZE):
+    # update state
+    for i in range(TABLE_SIZE):
+        for j in range(TABLE_SIZE):
             next(j,i)
-    for i in range(SIZE):
-        for j in range(SIZE):
+    # next generation
+    for i in range(TABLE_SIZE):
+        for j in range(TABLE_SIZE):
             table[i][j].next()
+def space_press(event):
+    global update_state
+    update_state = not update_state
 
+def r_press(event):
+    global update_state
+    for i in range(TABLE_SIZE):
+        for j in range(TABLE_SIZE):
+            table[i][j].state = 0
+    update_state = False
+    update()
 
-    root.after(100,update)
+def loop():
+    if update_state:
+        update()
 
+    root.after(100,loop)
 
-
-root.after(10,update)
+root.bind("<space>",space_press)
+root.bind("r",r_press)
+root.after(10,loop)
 root.mainloop()
