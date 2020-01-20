@@ -14,11 +14,15 @@ struct UnionFind {
     return roots[x] = root(roots[x]);
   }
 
-  void unite(int x, int y) {
-    int root_x = root(x);
-    int root_y = root(y);
-    if (root_x != root_y)
+  // when paramater is empty
+  int unite() { return -1; }
+  template <class Head, class... Tail>
+  int unite(Head&& head, Tail&&... tail) {
+    int root_x = root(head);
+    int root_y = unite(std::forward<Tail>(tail)...);
+    if (root_x != root_y && root_y != -1) // -1 is empty
       roots[root_x] = root_y;
+    return root_x;
   }
 
   bool same(int x, int y) {
@@ -37,9 +41,7 @@ int main(int argc, char const *argv[]) {
   UnionFind tree(10);
   tree.print();
   std::cout << "unite 0,1,2,3" << '\n';
-  tree.unite(0,1);
-  tree.unite(2,3);
-  tree.unite(0,2);
+  tree.unite(0,1,2,3);
   tree.print();
   std::cout << "same? 0 3" << '\n';
   std::cout <<std::boolalpha <<tree.same(0,3) << '\n';
