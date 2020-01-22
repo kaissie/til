@@ -5,7 +5,7 @@
 void sorting(std::vector<int>& v, int head, int tail, int n) {
   int pivot = v[head];
   int i = head, j = tail;
-  if(tail - head <= 1) return;
+  if(tail - head < 1) return;
   while (i != j) {
     if(v[i] >= pivot && v[j] <= pivot)
       std::swap(v[i],v[j]);
