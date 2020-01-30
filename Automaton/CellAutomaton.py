@@ -43,47 +43,55 @@ class Cell():
             color="#52b788"
         self.can.itemconfigure(self.id, fill=color)
 
-def next(x,y):
-    sx, ex = x - 1, x + 1
-    sy, ey = y - 1, y + 1
-    if sx < 0:
-        sx = 0
-    if sy < 0:
-        sy = 0
-    if ex > TABLE_SIZE - 1:
-        ex = TABLE_SIZE - 1
-    if ey > TABLE_SIZE - 1:
-        ey = TABLE_SIZE - 1
+class CellAutomaton():
+    def __init__(self):
+        self.__table = []
+        self.__create_cells()
 
-    count = 0
-    for i in range(sy,ey + 1):
-        for j in range(sx, ex + 1):
-            if table[i][j].state == 1:
-                count += 1
+    def __create_cells(self):
+        self.__table = [[0] * TABLE_SIZE for i in range(TABLE_SIZE)]
+        for i in range(TABLE_SIZE):
+            for j in range(TABLE_SIZE):
+                self.__table[i][j] = Cell(canvas,j*CELL_SIZE, i*CELL_SIZE)
 
-    if table[y][x].state == 1:
-        count -= 1
-    if count == 3:
-        table[y][x].next_state = 1
-    elif count >= 4:
-        table[y][x].next_state = 0
-    elif count <= 1:
-        table[y][x].next_state = 0
+    def __calc_state(self,x,y):
+        sx, ex = x - 1, x + 1
+        sy, ey = y - 1, y + 1
+        if sx < 0:
+            sx = 0
+        if sy < 0:
+            sy = 0
+        if ex > TABLE_SIZE - 1:
+            ex = TABLE_SIZE - 1
+        if ey > TABLE_SIZE - 1:
+            ey = TABLE_SIZE - 1
 
-table = [[0] * TABLE_SIZE for i in range(TABLE_SIZE)]
-for i in range(TABLE_SIZE):
-    for j in range(TABLE_SIZE):
-        table[i][j] = Cell(canvas,j*CELL_SIZE, i*CELL_SIZE)
+        count = 0
+        for i in range(sy,ey + 1):
+            for j in range(sx, ex + 1):
+                if self.__table[i][j].state == 1:
+                    count += 1
+        # except self state
+        if self.__table[y][x].state == 1:
+            count -= 1
+        if count == 3:
+            self.__table[y][x].next_state = 1
+        elif count >= 4:
+            self.__table[y][x].next_state = 0
+        elif count <= 1:
+            self.__table[y][x].next_state = 0
 
-def update():
-    # update state
-    for i in range(TABLE_SIZE):
-        for j in range(TABLE_SIZE):
-            next(j,i)
-    # next generation
-    for i in range(TABLE_SIZE):
-        for j in range(TABLE_SIZE):
-            table[i][j].next()
+    def update(self):
+        # update state
+        for i in range(TABLE_SIZE):
+            for j in range(TABLE_SIZE):
+                self.__calc_state(j,i)
+
+        # next generation
+        for i in range(TABLE_SIZE):
+            for j in range(TABLE_SIZE):
+                self.__table[i][j].next()
+
 def space_press(event):
     global update_state
     update_state = not update_state
@@ -96,9 +104,11 @@ def r_press(event):
     update_state = False
     update()
 
+
+cella = CellAutomaton()
 def loop():
     if update_state:
-        update()
+        cella.update()
 
     root.after(100,loop)
 
@@ -106,3 +116,11 @@ root.bind("<space>",space_press)
 root.bind("r",r_press)
 root.after(10,loop)
 root.mainloop()
+
+"""
+def main():
+    pass
+
+if __name__ = '__main__':
+    main()
+"""
