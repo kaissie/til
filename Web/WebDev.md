@@ -106,3 +106,16 @@ $margin: 16px;
   border-color: $blue;
 }
 ~~~
+
+## Parcel
+タスクランナー<br>
+Web開発におけ次のような様々な技術
+- AltJS(Typescript)
+- トランスコンパイラ（Babel）
+- フレームワーク(React, Vue, Angular)
+- メタCSS言語（Sass）
+- 構文チェッカー(eslint)
+
+これらをタスクとして一元に管理しくれるプログラム
+
+Parcel以外にもwebpackやgulpなどがある
