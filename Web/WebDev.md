@@ -119,3 +119,5 @@ Web開発におけ次のような様々な技術
 これらをタスクとして一元に管理しくれるプログラム
 
 Parcel以外にもwebpackやgulpなどがある
+
+[保存版】gulp, webpack, parcel...増え続けるタスクランナーの特徴を理解して最適なものを選択しよう | WEBA](https://hirata.blog/201712_taskrunner/)
