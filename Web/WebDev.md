@@ -10,12 +10,12 @@ Node.jsのバージョン管理ツール
 
 ## ECMAScript
 
-JavaScriptの標準規格
+JavaScriptの標準規格<br>
 独自拡張によって増えすぎたJavaScriptを標準化するために生まれた
 
 ## Babel
 
-ECMAScriptコンパイラ
+ECMAScriptコンパイラ<br>
 ECMAScriptに対応していないブラウザのために，旧仕様にコンパイルする
 
 プロジェクトフォルダ直下で実行
@@ -68,5 +68,41 @@ npm run build
 node dist/hogehoge.js
 ~~~
 
+## Sass
+"Syntactically Awesome StyleSheet"<br>
+CSSのメタ言語（CSSを拡張して書きやすくした言語）<br>
+Sassで書かれたものをCSSにコンパイルして使う
+### SASS記法
+インデント構文で書かれたSass<br>
+Sassと混乱しやすい，Sassがこちらを示している場合もある．
+~~~sass
+$blue: #3bbfce
+$margin: 16px
 
+.content-navigation
+  border-color: $blue
+  color: darken($blue, 10%)
 
+.border
+  padding: $margin/2
+  margin:  $margin/2
+  border-color: $blue
+~~~
+### SCSS記法
+CSSのように波括弧とセミコロンで書かれたSass<br>
+SASSよりも新しいがこちらのほうが主流？
+~~~scss
+$blue: #3bbfce;
+$margin: 16px;
+
+.content-navigation {
+  border-color: $blue;
+  color: darken($blue, 10%);
+}
+
+.border {
+  padding: $margin / 2;
+  margin: $margin / 2;
+  border-color: $blue;
+}
+~~~
