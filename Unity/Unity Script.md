@@ -64,4 +64,4 @@
 ## シーン
   using UnityEngine.SceneManagement
  - SceneManager.LoadScene("hogeScene")
-  - シーンを読み込む
+   - シーンを読み込む
