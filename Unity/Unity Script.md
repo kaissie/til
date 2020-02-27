@@ -61,3 +61,7 @@
   - 自身の子オブジェクト（非アクティブオブジェクト含む）を検索
 - gameObject.GetComponent<T> ()
   - オブジェクトの持っているコンポーネント（スクリプト）にアクセスできる。（Tはコンポーネント名）
+## シーン
+  using UnityEngine.SceneManagement
+ - SceneManager.LoadScene("hogeScene")
+  - シーンを読み込む
