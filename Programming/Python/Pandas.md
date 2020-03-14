@@ -261,6 +261,26 @@ df['temperature_rolling_mean'] = df['temperature'].rolling(window=3).mean()
 
 ## ダミー変数
 
+`pandas.get_dummies`でダミー化したデータフレームを取得できる．
+
+~~~python
+import pandas as pd
+name = pd.Series(['Alice','Bob', 'Carol', 'Dave'])
+sex =  pd.Series(['female','male', 'female', 'male'])
+df = pd.DataFrame({ 'Name':name, 'Sex':sex})
+~~~
+
+~~~python
+pd.get_dummies(df.Sex)
+~~~
+
+|      | femle | male |
+| ---- | :---- | ---- |
+| 0    | 1     | 0    |
+| 1    | 0     | 1    |
+| 2    | 1     | 0    |
+| 3    | 0     | 1    |
+
 
 
 **参考文献**  
