@@ -13,7 +13,7 @@
 
 - Instantiate(hogeObject, Vector3.zero, Quaternion.identity)
   - クローンを中心に無回転で配置する
-- 
+-
 
 ## 測定
 
@@ -61,7 +61,26 @@
   - 自身の子オブジェクト（非アクティブオブジェクト含む）を検索
 - gameObject.GetComponent<T> ()
   - オブジェクトの持っているコンポーネント（スクリプト）にアクセスできる。（Tはコンポーネント名）
+
 ## シーン
   using UnityEngine.SceneManagement
  - SceneManager.LoadScene("hogeScene")
    - シーンを読み込む
+
+## イベント関数
+[Unity - マニュアル: イベント関数の実行順](https://docs.unity3d.com/jp/460/Manual/ExecutionOrder.html)
+1. Awake: Start関数の前，およびプレハブのインスタンス化直後に呼び出される．
+1. OnEnable: オブジェクトを有効化した直後に呼び出される．
+1. Start: スクリプトのインスタンスが有効になると,最初のフレームのアップデート前に呼び出される．
+1. FixedUpdate: すべての物理特性の計算とアップデートの直前に呼び出される．（フレームレートと独立している）
+1. Update: フレームごとに一度呼び出される．
+1. LateUpdate: Update関数後にフレームごとに一度呼び出される．
+1. OnDisable: オブジェクトを無効化した直後に呼び出される．
+1. OnDestroy: オブジェクトを破棄した直後に呼び出される．
+
+### コルーチン
+所定の YieldInstruction が終了するまで,その実行 (生成) を中止できる関数．
+- yield: コルーチンは,次のフレームですべての Update 関数が呼び出された後に続行．。
+- yield WaitForSeconds: フレームに対してすべての Update 関数が呼び出された後,指定された時間遅延後に続行．
+- yield WaitForFixedUpdate: すべてのスクリプトですべての FixedUpdate 呼び出し後に続行．
+- yield StartCoroutine: コルーチンを連鎖し,MyFunc コルーチンが最初に完了するのを待つ．
