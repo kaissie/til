@@ -8,12 +8,21 @@
   - 引数の値ずつ移動
 - transform.position
   - 現在地を取得（代入できる） => ワープに使える
+- Rigidbody.velocity
+  - 速度を変更する．
+  - 移動にはこれを使うほうが健全かも？
+- Rigidbody.AddForce()
+  - 力を加える
+  - ForceModeがある
+    - Force
+    - Acceleration
+    - Impulse
+    - VelocityChange
 
 ### 生成
 
 - Instantiate(hogeObject, Vector3.zero, Quaternion.identity)
   - クローンを中心に無回転で配置する
--
 
 ## 測定
 
@@ -31,6 +40,8 @@
   - キーが押されている時
 - Input.GetKeyDown(KeyCode.Hoge)
   - キーが押された瞬間
+- Input.GetKeyUp(KeyCode.Hoge)
+  - キーが離された瞬間
 - KeyCode
   - KeyCode.(Up|Down|Right|Left)Arrow
   - KeyCode.[A-Z]
@@ -52,7 +63,7 @@
 - void OnTriggerEnter(Collider other)
   - 重なっている間呼び出される
 
-## 検索
+## 参照
 
 - GameObject.Find("hogehoge")
   - アクティブなオブジェクトを検索
@@ -84,3 +95,30 @@
 - yield WaitForSeconds: フレームに対してすべての Update 関数が呼び出された後,指定された時間遅延後に続行．
 - yield WaitForFixedUpdate: すべてのスクリプトですべての FixedUpdate 呼び出し後に続行．
 - yield StartCoroutine: コルーチンを連鎖し,MyFunc コルーチンが最初に完了するのを待つ．
+
+# Unity Feature
+
+## Tilemap
+
+TiledMapEditorのようにマップを作成することが出来る．
+
+### 使うもの
+
+- SpriteのSprite Mode を Multipleにする
+  - Sprite EditorでSliceすると分割できる
+- Tile：Spriteから作られるTilemapにできるオブジェクト
+  - Tile Paletteを作ると自動的に生成される
+- Tile Palette：Tileを集めたもの
+  - Tile Palleteウィンドウを開いて使う．
+  - SpriteをTile Palleteウィンドウに投げると，Tileが生成されTile Pallteに登録できる．
+  - TileをTile Palleteウィンドウに投げて，Tile Pallteを作ることもできる
+
+### Collider
+
+- **Tilemap Collider**をTilemapに追加すると，TileごとにColliderが作られる
+- **Composite Collider**を使うことで，TileのColliderが結合され，最適化されたジオメトリコライダーメッシュとなる
+  - これを使う場合，Tilemap Colliderの**Used by composite** にチェックを入れる
+
+
+
+[2D タイルマップアセットワークフロー：イメージをそのままステージに - Unity Technologies Blog](https://blogs.unity3d.com/jp/2018/01/25/2d-tilemap-asset-workflow-from-image-to-level/)
