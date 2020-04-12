@@ -119,6 +119,31 @@ TiledMapEditorのようにマップを作成することが出来る．
 - **Composite Collider**を使うことで，TileのColliderが結合され，最適化されたジオメトリコライダーメッシュとなる
   - これを使う場合，Tilemap Colliderの**Used by composite** にチェックを入れる
 
+### 2d-extras
 
+Unity公式のTilemap拡張ライブラリ
+
+#### 使い方
+
+Unity 2019.2以降の場合，`Packages/package.json`の`denpendencies`中に次の様に追加する．
+
+```
+"com.unity.2d.tilemap.extras": "https://github.com/Unity-Technologies/2d-extras.git#master"
+```
+
+その他については[2d-extras](https://github.com/Unity-Technologies/2d-extras)参照
+
+#### 出来ること
+
+- ランダムにタイルを配置する（RandomTile）
+- アニメーションするタイル（AnimatedTile）
+- 適切なタイルを自動的に選択（TerrainTile）
+- タイルにルールを設定する（RuleTile）
+- Grid上の座標を表示する（CoordinateBrush）
+- タイルで線を引く（LineBrush）
+- RandomTileのBrush版（RandomBrush）
+- Prefabをタイルのように配置する（PrefabBrush）
+- GameObjectをタイルのように扱う（GameObjectBrush）
+- Tileグループをまとめてスポイトする（GroupBrush）
 
 [2D タイルマップアセットワークフロー：イメージをそのままステージに - Unity Technologies Blog](https://blogs.unity3d.com/jp/2018/01/25/2d-tilemap-asset-workflow-from-image-to-level/)
